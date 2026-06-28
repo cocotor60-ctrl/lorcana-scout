@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lorcana Scout</title>
+  <meta name="theme-color" content="#111827" />
+  <style>
+    :root{--bg:#0b1020;--card:#131a2e;--card2:#18223b;--text:#f8fafc;--muted:#94a3b8;--line:#26324f;--accent:#8b5cf6;--danger:#ef4444;--ok:#22c55e;--warn:#f59e0b;--ruby:#dc2626;--sapphire:#2563eb;--emerald:#16a34a;--amber:#facc15;--steel:#9ca3af;--amethyst:#9333ea}*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(circle at top,#1e1b4b 0,#0b1020 35%,#070b16 100%);color:var(--text);min-height:100vh}.app{max-width:980px;margin:auto;padding:18px 14px 90px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:18px}.brand h1{font-size:28px;margin:0}.brand p{margin:4px 0 0;color:var(--muted);font-size:14px}.status{font-size:12px;color:var(--muted);padding:8px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.04)}.grid{display:grid;grid-template-columns:1fr 1.2fr;gap:14px}@media(max-width:800px){.grid{grid-template-columns:1fr}.top{align-items:flex-start}.brand h1{font-size:24px}}.card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));border:1px solid var(--line);border-radius:22px;padding:16px;box-shadow:0 20px 60px rgba(0,0,0,.22);backdrop-filter:blur(8px)}.card h2{font-size:17px;margin:0 0 14px}.row{display:grid;gap:10px;margin-bottom:12px}label{font-size:13px;color:var(--muted)}input,textarea,select{width:100%;border:1px solid var(--line);background:#0d1426;color:var(--text);border-radius:14px;padding:13px 14px;font-size:16px;outline:none}textarea{min-height:86px;resize:vertical}input:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(139,92,246,.18)}.colors{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.ink{border:1px solid var(--line);border-radius:14px;padding:10px;display:flex;align-items:center;gap:9px;background:#0d1426;cursor:pointer;user-select:none}.ink input{width:auto}.dot{width:16px;height:16px;border-radius:50%;display:inline-block;box-shadow:0 0 0 2px rgba(255,255,255,.18)}.Ruby{background:var(--ruby)}.Sapphire{background:var(--sapphire)}.Emerald{background:var(--emerald)}.Amber{background:var(--amber)}.Steel{background:var(--steel)}.Amethyst{background:var(--amethyst)}.btns{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:14px;padding:12px 14px;font-weight:800;color:white;background:var(--accent);cursor:pointer;font-size:15px}.btn.secondary{background:#334155}.btn.danger{background:var(--danger)}.btn.ok{background:var(--ok);color:#052e16}.search{position:sticky;top:0;z-index:5;background:rgba(11,16,32,.82);backdrop-filter:blur(12px);padding-bottom:10px}.stats{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.pill{font-size:12px;color:#dbeafe;background:#111c35;border:1px solid var(--line);padding:7px 10px;border-radius:999px}.list{display:grid;gap:10px}.player{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px}.playerHead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.name{font-size:20px;font-weight:900}.meta{font-size:12px;color:var(--muted);margin-top:4px}.inkLine{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0}.tag{display:inline-flex;align-items:center;gap:6px;background:#0d1426;border:1px solid var(--line);border-radius:999px;padding:6px 9px;font-size:13px}.comment{white-space:pre-wrap;color:#e5e7eb;line-height:1.4;margin-top:8px}.empty{color:var(--muted);text-align:center;padding:26px}.fab{position:fixed;right:18px;bottom:18px;border:0;border-radius:999px;background:var(--accent);color:white;width:60px;height:60px;font-size:30px;box-shadow:0 12px 30px rgba(139,92,246,.4);display:none}@media(max-width:800px){.fab{display:block}.formCard{display:none}.formCard.open{display:block;position:fixed;left:10px;right:10px;bottom:86px;z-index:20;max-height:80vh;overflow:auto}}.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#111827;border:1px solid var(--line);color:white;padding:12px 14px;border-radius:14px;display:none;z-index:99}.small{font-size:12px;color:var(--muted)}.adminBox{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}.adminPanel{margin-top:10px;background:#0d1426;border:1px solid var(--line);border-radius:16px;padding:12px}.adminTitle{display:flex;justify-content:space-between;gap:8px;align-items:center}.hide{display:none!important}
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="brand"><h1>🏆 Lorcana Scout</h1><p>Base partagée Firebase pour ton équipe</p></div>
+    <div id="status" class="status">Connexion...</div>
+  </div>
+  <div class="grid">
+    <section id="formCard" class="card formCard">
+      <h2 id="formTitle">➕ Ajouter un adversaire</h2>
+      <form id="playerForm">
+        <input type="hidden" id="editId" />
+        <div class="row"><label>Pseudo du joueur</label><input id="name" autocomplete="off" required placeholder="Ex : Neoh, Minato, Vixcious..." /></div>
+        <div class="row"><label>Couleurs du deck, 2 maximum</label><div class="colors" id="colors"></div></div>
+        <div class="row"><label>Commentaire</label><textarea id="comment" placeholder="Ex : Ruby Sapphire contrôle, beaucoup de chansons, joue Diablo..."></textarea></div>
+        <div class="row"><label>Ajouté par</label><input id="author" autocomplete="off" placeholder="Ex : Coco" /></div>
+        <div class="btns"><button class="btn ok" type="submit">Enregistrer</button><button class="btn secondary" type="button" id="resetBtn">Annuler</button></div>
+        <p class="small">Astuce : sur téléphone, appuie sur le gros bouton + pour ajouter vite entre deux rondes.</p>
+      </form>
+      <div class="adminBox">
+        <button class="btn secondary" type="button" id="adminOpenBtn">⚙️ Administration</button>
+        <div id="adminPanel" class="adminPanel hide">
+          <div class="adminTitle"><strong>Mode admin</strong><span class="small">Réservé à toi</span></div>
+          <p class="small">Le bouton ci-dessous supprime toutes les fiches de la base Firebase.</p>
+          <div class="btns">
+            <button class="btn danger" type="button" id="adminResetDbBtn">🔄 Reset toute la base</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="card">
+      <div class="search"><h2>🔍 Recherche</h2><input id="search" autocomplete="off" placeholder="Tape un pseudo, une couleur ou un commentaire..." /><div class="stats" id="stats"></div></div>
+      <div id="list" class="list"><div class="empty">Chargement...</div></div>
+    </section>
+  </div>
+</div>
+<button id="fab" class="fab">+</button><div id="toast" class="toast"></div>
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js';
+import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp, getDocs, writeBatch } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD4D7qH7mu_QBOjUyqYlhiUpMtPcfL57g0",
+  authDomain: "lorcanascot.firebaseapp.com",
+  projectId: "lorcanascot",
+  storageBucket: "lorcanascot.firebasestorage.app",
+  messagingSenderId: "999190883837",
+  appId: "1:999190883837:web:d5140f670599cafe167d94"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const ADMIN_PASSWORD = 'coco'; // Change ce mot de passe dans le fichier si tu veux.
+const COLORS = [
+  ['Ruby','Rouge'], ['Sapphire','Bleu'], ['Emerald','Vert'], ['Amber','Jaune'], ['Steel','Gris'], ['Amethyst','Violet']
+];
+let players = [];
+const $ = id => document.getElementById(id);
+const toast = msg => { $('toast').textContent=msg; $('toast').style.display='block'; setTimeout(()=>$('toast').style.display='none',1800); };
+
+$('colors').innerHTML = COLORS.map(([en,fr]) => `<label class="ink"><input type="checkbox" name="ink" value="${en}"><span class="dot ${en}"></span>${fr}</label>`).join('');
+$('colors').addEventListener('change', e => {
+  const checked = [...document.querySelectorAll('input[name=ink]:checked')];
+  if (checked.length > 2) { e.target.checked = false; toast('2 couleurs maximum'); }
+});
+
+const q = query(collection(db,'players'), orderBy('updatedAt','desc'));
+onSnapshot(q, snap => {
+  players = snap.docs.map(d => ({id:d.id, ...d.data()}));
+  $('status').textContent = `✅ En ligne · ${players.length} fiches`;
+  render();
+}, err => { $('status').textContent = '❌ Erreur Firebase'; toast(err.message); });
+
+function inkLabel(c){ return (COLORS.find(x=>x[0]===c)||[c,c])[1]; }
+function inkTags(colors=[]){ return colors.map(c=>`<span class="tag"><span class="dot ${c}"></span>${inkLabel(c)}</span>`).join(''); }
+function norm(s){ return (s||'').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+function render(){
+  const term = norm($('search').value);
+  const filtered = players.filter(p => norm([p.name, ...(p.colors||[]).map(inkLabel), p.comment, p.author].join(' ')).includes(term));
+  $('stats').innerHTML = `<span class="pill">${filtered.length} résultat(s)</span><span class="pill">${players.length} fiches total</span>`;
+  if(!filtered.length){ $('list').innerHTML = '<div class="empty">Aucun joueur trouvé</div>'; return; }
+  $('list').innerHTML = filtered.map(p => `
+    <article class="player">
+      <div class="playerHead">
+        <div><div class="name">${escapeHtml(p.name||'Sans nom')}</div><div class="meta">Ajouté par ${escapeHtml(p.author||'inconnu')}</div></div>
+        <div class="btns"><button class="btn secondary" data-edit="${p.id}">✏️</button><button class="btn danger" data-del="${p.id}">🗑️</button></div>
+      </div>
+      <div class="inkLine">${inkTags(p.colors||[])}</div>
+      <div class="comment">${escapeHtml(p.comment||'Aucun commentaire')}</div>
+    </article>`).join('');
+}
+function escapeHtml(str){return (str||'').replace(/[&<>'"]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]));}
+$('search').addEventListener('input', render);
+$('playerForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const data = { name:$('name').value.trim(), colors:[...document.querySelectorAll('input[name=ink]:checked')].map(x=>x.value), comment:$('comment').value.trim(), author:$('author').value.trim()||localStorage.getItem('lorcanaAuthor')||'inconnu', updatedAt:serverTimestamp() };
+  if(!data.name) return toast('Pseudo obligatoire');
+  if(data.colors.length !== 2) return toast('Choisis exactement 2 couleurs');
+  localStorage.setItem('lorcanaAuthor', data.author);
+  const id = $('editId').value;
+  if(id) await updateDoc(doc(db,'players',id), data); else await addDoc(collection(db,'players'), {...data, createdAt:serverTimestamp()});
+  resetForm(); toast('Fiche enregistrée ✅');
+});
+$('list').addEventListener('click', async e => {
+  const edit = e.target.dataset.edit, del = e.target.dataset.del;
+  if(edit){ const p=players.find(x=>x.id===edit); if(!p) return; $('editId').value=p.id; $('name').value=p.name||''; $('comment').value=p.comment||''; $('author').value=p.author||localStorage.getItem('lorcanaAuthor')||''; document.querySelectorAll('input[name=ink]').forEach(i=>i.checked=(p.colors||[]).includes(i.value)); $('formTitle').textContent='✏️ Modifier la fiche'; $('formCard').classList.add('open'); window.scrollTo({top:0,behavior:'smooth'}); }
+  if(del && confirm('Supprimer cette fiche ?')){ await deleteDoc(doc(db,'players',del)); toast('Fiche supprimée'); }
+});
+function resetForm(){ $('playerForm').reset(); $('editId').value=''; $('formTitle').textContent='➕ Ajouter un adversaire'; $('formCard').classList.remove('open'); $('author').value=localStorage.getItem('lorcanaAuthor')||''; }
+
+$('adminOpenBtn').onclick = () => {
+  const pass = prompt('Mot de passe admin :');
+  if(pass !== ADMIN_PASSWORD) return toast('Mot de passe incorrect');
+  $('adminPanel').classList.toggle('hide');
+  toast('Mode admin activé');
+};
+$('adminResetDbBtn').onclick = async () => {
+  const pass = prompt('Confirme le mot de passe admin :');
+  if(pass !== ADMIN_PASSWORD) return toast('Mot de passe incorrect');
+  if(!confirm('ATTENTION : supprimer toutes les fiches ?')) return;
+  if(!confirm('Dernière confirmation : reset complet de la base ?')) return;
+  try{
+    let total = 0;
+    while(true){
+      const snap = await getDocs(collection(db,'players'));
+      if(snap.empty) break;
+      const batch = writeBatch(db);
+      snap.docs.slice(0,450).forEach(d => batch.delete(d.ref));
+      await batch.commit();
+      total += Math.min(snap.docs.length,450);
+      if(snap.docs.length <= 450) break;
+    }
+    toast(`Base reset ✅ ${total} fiche(s) supprimée(s)`);
+  }catch(err){
+    toast('Erreur reset : ' + err.message);
+  }
+};
+$('resetBtn').onclick=resetForm; $('fab').onclick=()=>$('formCard').classList.toggle('open'); resetForm();
+
+</script>
+</body>
+</html>
